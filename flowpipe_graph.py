@@ -14,7 +14,7 @@ def Bake(settings):
     pass
 
 
-@Node(outputs=["rendered_sequence"])
+@Node(outputs=["rendered_sequence", "output2", "output3"])
 def Render(nuke_script):
     pass
 
@@ -81,7 +81,8 @@ class NodeGraphDialog(QtWidgets.QMainWindow):
             for row, node in enumerate(column):
                 ui_node = self.nodegraph.graph_scene.create_node(
                     node.name,
-                    inputs=node.inputs.keys())
+                    inputs=node.inputs.keys(),
+                    outputs=node.outputs.keys())
                 ui_nodes[node.name] = ui_node
 
                 x_diff = (ui_node.boundingRect().left() - ui_node.boundingRect().x() + 4 if
@@ -103,7 +104,7 @@ class NodeGraphDialog(QtWidgets.QMainWindow):
                     upstream_ui_node = ui_nodes[upstream_plug.node.name]
 
                     self.nodegraph.graph_scene.create_edge(
-                        upstream_ui_node._output, ui_node._inputs[0])
+                        upstream_ui_node._outputs[0], ui_node._inputs[0])
 
 
 class NodeGraphWidget(QtWidgets.QWidget):
@@ -151,6 +152,7 @@ class NodeGraphWidget(QtWidgets.QWidget):
 
             source_node.outputs[source_node.outputs.keys()[0]] >> target_node.inputs[target._name]
 
+        print graph
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])

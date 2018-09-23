@@ -87,11 +87,11 @@ class Scene(QtWidgets.QGraphicsScene):
         """
         return self._edges_by_hash
 
-    def create_node(self, name, inputs=["in"], parent=None):
+    def create_node(self, name, inputs=["in"], outputs=None, parent=None):
         """Create a new node
 
         """
-        node = Node(name, self, inputs=inputs, parent=parent)
+        node = Node(name, self, inputs=inputs, outputs=outputs, parent=parent)
         self._nodes.append(node)
         return node
 
